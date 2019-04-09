@@ -8,6 +8,8 @@ class SqlManage extends SqlManageBase
 	public const CREATE_SUMMARY_TABLE_MYSQL = "Create LogSummary table for MySQL";
 	public const INSERT_LOG = "Insert log";
 	public const INSERT_SUMMARY = "Insert LogSummary";
+	public const CREATER_EXAMPLE_CUSTOMER = "Create customer for example";
+	public const INSERT_EXAMPLE_CUSTOMER = "Insert Customer example";
 
     public static function getSettings()
     {
@@ -22,7 +24,7 @@ SqlLog (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(512),
   label VARCHAR(512),
-  sql TEXT NOT NULL,
+  sqlString TEXT NOT NULL,
   params TEXT,
   executionTime INT NOT NULL,
   created DATETIME,
@@ -52,7 +54,7 @@ SqlLogSummary (
   array (
     'name' => 'INSERT_LOG',
     'label' => 'Insert log',
-    'sql' => 'INSERT INTO Log (name, label, sql, params, executionTime, created) VALUES (?,?,?,?,?,NOW())',
+    'sql' => 'INSERT INTO SqlLog (name, label, sqlString, params, executionTime, created) VALUES (?,?,?,?,?,NOW())',
     'note' => '',
   ),
   3 => 
@@ -63,6 +65,29 @@ SqlLogSummary (
 (name, label, slowestParams, maxExecutionTime, minExecutionTime, created, updated)
 VALUES
 (?, ?, ?, ?, ?, NOW(), NOW())',
+    'note' => '',
+  ),
+  4 => 
+  array (
+    'name' => 'CREATER_EXAMPLE_CUSTOMER',
+    'label' => 'Create customer for example',
+    'sql' => 'CREATE TABLE IF NOT EXISTS 
+ExampleCustomer (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(512),
+  address VARCHAR(512),
+  email VARCHAR(512),
+  created DATETIME,
+  updated DATETIME,
+  PRIMARY KEY (id)
+)',
+    'note' => '',
+  ),
+  5 => 
+  array (
+    'name' => 'INSERT_EXAMPLE_CUSTOMER',
+    'label' => 'Insert Customer example',
+    'sql' => 'INSERT INTO ExampleCustomer (name, address, email, created, updated) VALUES (?, ?, ?, NOW(), NOW())',
     'note' => '',
   ),
 );
