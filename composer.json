@@ -1,0 +1,30 @@
+{
+  "name": "ellsif/sql_access",
+  "description": "SQL Accessor with logger",
+  "keywords": ["php", "sql", "log"],
+  "type": "project",
+  "license": "MIT",
+  "homepage": "https://github.com/ellsif/sql_access",
+  "authors": [
+    {
+      "name": "ellsif",
+      "email": "hatasu@ellsif.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ellsif/sql_manager"
+    }
+  ],
+  "require": {
+    "ellsif/sql_manager": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "ellsif\\sql_access\\": [
+        "src/"
+      ]
+    }
+  }
+}
