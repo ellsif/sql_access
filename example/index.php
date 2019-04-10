@@ -19,11 +19,10 @@ $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATER_EXAMPLE_CUSTOMER), [])
 
 // カスタマー保存
 $sqlAccessor->insert(
-    SqlManage::getSql(SqlManage::INSERT_EXAMPLE_CUSTOMER),
+    SqlManage::INSERT_EXAMPLE_CUSTOMER,
     [
         'Test Taro',
         '000-0000 Tokyo',
         'test@example.com',
-    ],
-    SqlManage::getSetting(SqlManage::INSERT_EXAMPLE_CUSTOMER)
+    ]
 );

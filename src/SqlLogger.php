@@ -16,11 +16,11 @@ class SqlLogger
 
         // テーブル作成 TODO mysql以外の対応
         if ($sqlAccessor->getDbType() === 'mysql') {
-            $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_LOG_TABLE_MYSQL), []);
-            if ($sqlAccessor->getValue(SqlManage::getSql(SqlManage::CHECK_LOG_INDEX_MYSQL), [$sqlAccessor->getDbname()]) == 0) {
-                $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_LOG_INDEX_MYSQL), []);
+            $sqlAccessor->create(SqlManage::CREATE_LOG_TABLE_MYSQL);
+            if ($sqlAccessor->getValue(SqlManage::CHECK_LOG_INDEX_MYSQL, [$sqlAccessor->getDbname()]) == 0) {
+                $sqlAccessor->create(SqlManage::CREATE_LOG_INDEX_MYSQL);
             }
-            $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_SUMMARY_TABLE_MYSQL), []);
+            $sqlAccessor->create(SqlManage::CREATE_SUMMARY_TABLE_MYSQL);
         }
         $sqlAccessor->setLogger($this);
     }
@@ -43,7 +43,7 @@ class SqlLogger
         $name = $options['name'] ?? null;
         $label = $options['label'] ?? null;
         $this->sqlAccessor->insert(
-            SqlManage::getSql(SqlManage::INSERT_LOG),
+            SqlManage::INSERT_LOG,
             [
                 $name,
                 $label,
@@ -51,16 +51,16 @@ class SqlLogger
                 json_encode($params),
                 $executionTime,
             ],
-            [],
+            null,
             true
         );
 
         // SqlSummery更新
         if ($name && $label) {
             $logs = $this->sqlAccessor->getList(
-                sprintf(SqlManage::getSql(SqlManage::LIST_LOG), $this->summaryEach),
+                SqlManage::getSql(SqlManage::LIST_LOG, $this->summaryEach),
                 [$name, $label],
-                [],
+                null,
                 true
             );
             $slowestParams = '';
@@ -78,18 +78,18 @@ class SqlLogger
             }
 
             $updated = $this->sqlAccessor->update(
-                SqlManage::getSql(SqlManage::UPDATE_SUMMARY),
+                SqlManage::UPDATE_SUMMARY,
                 [
                     $slowestParams,
                     $maxExecutionTime,
                     $minExecutionTime,
                 ],
-                [],
+                null,
                 true
             );
             if (!$updated) {
                 $this->sqlAccessor->insert(
-                    SqlManage::getSql(SqlManage::INSERT_SUMMARY),
+                    SqlManage::INSERT_SUMMARY,
                     [
                         $name,
                         $label,
@@ -97,7 +97,7 @@ class SqlLogger
                         $maxExecutionTime,
                         $minExecutionTime,
                     ],
-                    [],
+                    null,
                     true
                 );
             }

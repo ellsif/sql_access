@@ -119,6 +119,17 @@ class SqlAccessor
 
     protected function execute($sql, $params, $options, $skipLog)
     {
+        // $sqlにラベルが指定されている場合
+        try {
+            $setting = SqlManage::getSetting($sql);
+            $sql = $setting['sql'];
+            if (empty($options)) {
+                $options = $setting;
+            }
+        } catch (\DomainException $e) {
+            // SQL文が指定された
+        }
+
         $this->onStart();
         $stmt = $this->pdo->prepare($sql);
         if (is_array($params) && !empty($params)) {
@@ -136,7 +147,7 @@ class SqlAccessor
             return $stmt;
         } else {
             throw new \Exception(
-                "SQL execution failed:" . implode(", ", $stmt->errorInfo())
+                "SQL execution failed: " . implode(", ", $stmt->errorInfo())
             );
         }
     }
