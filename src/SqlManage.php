@@ -12,6 +12,8 @@ class SqlManage extends SqlManageBase
 	public const INSERT_EXAMPLE_CUSTOMER = "Insert Customer example";
 	public const CREATE_LOG_INDEX_MYSQL = "Create Index for SqlLog";
 	public const CHECK_LOG_INDEX_MYSQL = "check SqlLogIndex exists";
+	public const UPDATE_SUMMARY = "Update SqlLogSummary";
+	public const LIST_LOG = "Get logs by name and label";
 
     public static function getSettings()
     {
@@ -105,6 +107,20 @@ ExampleCustomer (
     'name' => 'CHECK_LOG_INDEX_MYSQL',
     'label' => 'check SqlLogIndex exists',
     'sql' => 'SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = ? AND TABLE_NAME=\'SqlLog\' AND INDEX_NAME=\'SqlLogIndex\'',
+    'note' => '',
+  ),
+  8 => 
+  array (
+    'name' => 'UPDATE_SUMMARY',
+    'label' => 'Update SqlLogSummary',
+    'sql' => 'UPDATE SqlLogSummary SET slowestParams = ?, maxExecutionTime = ?, minExecutionTime =?, updated = NOW()',
+    'note' => '',
+  ),
+  9 => 
+  array (
+    'name' => 'LIST_LOG',
+    'label' => 'Get logs by name and label',
+    'sql' => 'SELECT * FROM SqlLog WHERE name = ? AND label = ? ORDER BY created DESC LIMIT %d',
     'note' => '',
   ),
 );

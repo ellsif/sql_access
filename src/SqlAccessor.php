@@ -108,6 +108,15 @@ class SqlAccessor
         return $stmt->rowCount();
     }
 
+    /**
+     * データを更新します。
+     */
+    public function update($sql, $params, $options = null, $skipLog = false)
+    {
+        $stmt = $this->execute($sql, $params, $options, $skipLog);
+        return $stmt->rowCount();
+    }
+
     protected function execute($sql, $params, $options, $skipLog)
     {
         $this->onStart();

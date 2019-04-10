@@ -39,11 +39,14 @@ class SqlLogger
      */
     public function log($sqlString, $params, $executionTime, $options)
     {
+        // SqlLog追加
+        $name = $options['name'] ?? null;
+        $label = $options['label'] ?? null;
         $this->sqlAccessor->insert(
             SqlManage::getSql(SqlManage::INSERT_LOG),
             [
-                $options['name'] ?? null,
-                $options['label'] ?? null,
+                $name,
+                $label,
                 $sqlString,
                 json_encode($params),
                 $executionTime,
@@ -51,5 +54,53 @@ class SqlLogger
             [],
             true
         );
+
+        // SqlSummery更新
+        if ($name && $label) {
+            $logs = $this->sqlAccessor->getList(
+                sprintf(SqlManage::getSql(SqlManage::LIST_LOG), $this->summaryEach),
+                [$name, $label],
+                [],
+                true
+            );
+            $slowestParams = '';
+            $maxExecutionTime = 0;
+            $minExecutionTime = PHP_INT_MAX;
+            foreach($logs as $log) {
+                $executionTime = $log['executionTime'];
+                if ($executionTime > $maxExecutionTime) {
+                    $maxExecutionTime = $executionTime;
+                    $slowestParams = $log['params'];
+                }
+                if ($executionTime < $minExecutionTime) {
+                    $minExecutionTime = $executionTime;
+                }
+            }
+
+            $updated = $this->sqlAccessor->update(
+                SqlManage::getSql(SqlManage::UPDATE_SUMMARY),
+                [
+                    $slowestParams,
+                    $maxExecutionTime,
+                    $minExecutionTime,
+                ],
+                [],
+                true
+            );
+            if (!$updated) {
+                $this->sqlAccessor->insert(
+                    SqlManage::getSql(SqlManage::INSERT_SUMMARY),
+                    [
+                        $name,
+                        $label,
+                        $slowestParams,
+                        $maxExecutionTime,
+                        $minExecutionTime,
+                    ],
+                    [],
+                    true
+                );
+            }
+        }
     }
 }

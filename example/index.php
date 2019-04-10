@@ -21,9 +21,9 @@ $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATER_EXAMPLE_CUSTOMER), [])
 $sqlAccessor->insert(
     SqlManage::getSql(SqlManage::INSERT_EXAMPLE_CUSTOMER),
     [
-        'name' => 'Test Taro',
-        'address' => '000-0000 Tokyo',
-        'email' => 'test@example.com',
+        'Test Taro',
+        '000-0000 Tokyo',
+        'test@example.com',
     ],
     SqlManage::getSetting(SqlManage::INSERT_EXAMPLE_CUSTOMER)
 );
