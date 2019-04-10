@@ -4,16 +4,16 @@ use ellsif\sql_manager\SqlManageBase;
 
 class SqlManage extends SqlManageBase
 {
-	public const CREATE_LOG_TABLE_MYSQL = "Create SQL log table for MySQL";
-	public const CREATE_SUMMARY_TABLE_MYSQL = "Create LogSummary table for MySQL";
-	public const INSERT_LOG = "Insert log";
-	public const INSERT_SUMMARY = "Insert LogSummary";
-	public const CREATER_EXAMPLE_CUSTOMER = "Create customer for example";
-	public const INSERT_EXAMPLE_CUSTOMER = "Insert Customer example";
-	public const CREATE_LOG_INDEX_MYSQL = "Create Index for SqlLog";
-	public const CHECK_LOG_INDEX_MYSQL = "check SqlLogIndex exists";
-	public const UPDATE_SUMMARY = "Update SqlLogSummary";
-	public const LIST_LOG = "Get logs by name and label";
+	public const CREATE_LOG_TABLE_MYSQL = 'Create SQL log table for MySQL';
+	public const CREATE_SUMMARY_TABLE_MYSQL = 'Create LogSummary table for MySQL';
+	public const INSERT_LOG = 'Insert log';
+	public const INSERT_SUMMARY = 'Insert LogSummary';
+	public const CREATER_EXAMPLE_CUSTOMER = 'Create customer for example';
+	public const INSERT_EXAMPLE_CUSTOMER = 'Insert Customer example';
+	public const CREATE_LOG_INDEX_MYSQL = 'Create Index for SqlLog';
+	public const CHECK_LOG_INDEX_MYSQL = 'check SqlLogIndex exists';
+	public const UPDATE_SUMMARY = 'Update SqlLogSummary';
+	public const LIST_LOG = 'Get logs by name and label';
 
     public static function getSettings()
     {
