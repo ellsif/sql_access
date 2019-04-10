@@ -15,7 +15,7 @@ $sqlAccessor = new SqlAccessor(
 $sqlLogger = new SqlLogger($sqlAccessor);
 
 // ExampleCustomerテーブル作成
-$sqlAccessor->createTable(SqlManage::getSql(SqlManage::CREATER_EXAMPLE_CUSTOMER), []);
+$sqlAccessor->create(SqlManage::getSql(SqlManage::CREATER_EXAMPLE_CUSTOMER), []);
 
 // カスタマー保存
 $sqlAccessor->insert(

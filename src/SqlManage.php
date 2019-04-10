@@ -10,6 +10,8 @@ class SqlManage extends SqlManageBase
 	public const INSERT_SUMMARY = "Insert LogSummary";
 	public const CREATER_EXAMPLE_CUSTOMER = "Create customer for example";
 	public const INSERT_EXAMPLE_CUSTOMER = "Insert Customer example";
+	public const CREATE_LOG_INDEX_MYSQL = "Create Index for SqlLog";
+	public const CHECK_LOG_INDEX_MYSQL = "check SqlLogIndex exists";
 
     public static function getSettings()
     {
@@ -88,6 +90,21 @@ ExampleCustomer (
     'name' => 'INSERT_EXAMPLE_CUSTOMER',
     'label' => 'Insert Customer example',
     'sql' => 'INSERT INTO ExampleCustomer (name, address, email, created, updated) VALUES (?, ?, ?, NOW(), NOW())',
+    'note' => '',
+  ),
+  6 => 
+  array (
+    'name' => 'CREATE_LOG_INDEX_MYSQL',
+    'label' => 'Create Index for SqlLog',
+    'sql' => 'ALTER TABLE SqlLog ADD INDEX SqlLogIndex (name, label);
+',
+    'note' => '',
+  ),
+  7 => 
+  array (
+    'name' => 'CHECK_LOG_INDEX_MYSQL',
+    'label' => 'check SqlLogIndex exists',
+    'sql' => 'SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = ? AND TABLE_NAME=\'SqlLog\' AND INDEX_NAME=\'SqlLogIndex\'',
     'note' => '',
   ),
 );

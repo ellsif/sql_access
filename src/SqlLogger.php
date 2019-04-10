@@ -14,10 +14,13 @@ class SqlLogger
     {
         $this->sqlAccessor = $sqlAccessor;
 
-        // テーブル作成(MySQLのみ)
+        // テーブル作成 TODO mysql以外の対応
         if ($sqlAccessor->getDbType() === 'mysql') {
-            $sqlAccessor->createTable(SqlManage::getSql(SqlManage::CREATE_LOG_TABLE_MYSQL), []);
-            $sqlAccessor->createTable(SqlManage::getSql(SqlManage::CREATE_SUMMARY_TABLE_MYSQL), []);
+            $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_LOG_TABLE_MYSQL), []);
+            if ($sqlAccessor->getValue(SqlManage::getSql(SqlManage::CHECK_LOG_INDEX_MYSQL), [$sqlAccessor->getDbname()]) == 0) {
+                $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_LOG_INDEX_MYSQL), []);
+            }
+            $sqlAccessor->create(SqlManage::getSql(SqlManage::CREATE_SUMMARY_TABLE_MYSQL), []);
         }
         $sqlAccessor->setLogger($this);
     }
